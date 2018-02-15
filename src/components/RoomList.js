@@ -5,7 +5,8 @@ class RoomList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rooms: []
+      rooms: [],
+      newRoomName: ''
     }
   }
 
@@ -18,21 +19,43 @@ class RoomList extends Component {
     });
   }
 
-  componentWillMount = () => {
-    this.roomsRef = this.props.firebase.database().ref('roomse');
-    console.log('from willMount this.roomsRef >>> ', this.roomsRef)
+  changeHandler(e) {
+//  changeHandler = (e) => {
+    console.log('changeHandler !!!');
+    this.setState({ newRoomName: e.target.value });
+    console.log('newRoomName >>> ', this.state.newRoomName)
   }
 
+  submitHandler(e) {
+    console.log('submitHandler !!!');
+    e.preventDefault();
+    //this.state.newRoomName ? console.log('good') : alert('there is no newRoomName!')
+
+    this.state.newRoomName ?
+      this.roomsRef.push({
+        name: this.state.newRoomName
+      }) :
+      alert('Please add a new room name!');
+  }
 
   render() {
     const roomList = this.state.rooms.map((room) =>
-      <li key={room.key}>{room.name}</li>)
+      <h5 key={room.key}>{room.name}</h5>)
 
     return (
 
       <div>
 
         {roomList}
+
+        <br />
+
+        <form onSubmit={(e) => this.submitHandler(e)}>
+          <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} /> &nbsp;
+          <input type="submit" />
+          <br />
+          {this.state.newRoomName}
+        </form>
 
       </div>
 

@@ -1,7 +1,5 @@
 .App {
-  /*text-align: center; */
   text-align:left;
-  margin-left: 10%;
 }
 
 .App-logo {
@@ -27,4 +25,36 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/*        */
+
+.container {
+  padding-top: 10px;
+  display: flex;
+  /*border: 3px solid */;
+  min-height: 100vh;
+  /*height: 100vh;*/
+  flex-direction: row; /* default */
+  flex-wrap: wrap;
+}
+
+.left-column {
+  background-color: lightblue;
+  width: 300px;
+  flex: 1;
+  /*flex-basis: 50px;*/
+}
+
+.right-column {
+  background-color: lightgray;
+  flex: 2;
+  /*flex-basis: 500px;*/
+}
+
+.move-right {
+  float: right;
+  clear: right;
+  margin-top: -40px;
+  margin-right: 10px;
 }
