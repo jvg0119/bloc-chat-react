@@ -22,14 +22,14 @@ class RoomList extends Component {
   }
 
   changeHandler(e) {
-  //  changeHandler = (e) => {
-  //  console.log('changeHandler !!!');
+//  changeHandler = (e) => {
+    console.log('changeHandler !!!');
     this.setState({ newRoomName: e.target.value });
-  //  console.log('newRoomName >>> ', this.state.newRoomName)
+    console.log('newRoomName >>> ', this.state.newRoomName)
   }
 
   submitHandler(e) {
-    // console.log('submitHandler !!!');
+    console.log('submitHandler !!!');
     e.preventDefault();
 
     this.state.newRoomName ?
@@ -62,23 +62,30 @@ class RoomList extends Component {
           onHide={this.handleHide}
           container={this}
           aria-labelledby="contained-modal-title">
-
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title">
               Create new room
             </Modal.Title>
           </Modal.Header>
+        <Modal.Body>
 
-          <Modal.Body>
-            Enter a new room name &nbsp;
-            <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} style={{width: 400, height: 40}} /> &nbsp;
+            {/* <form onSubmit={(e) => this.submitHandler(e)}> */}
+
+              Enter a new room name &nbsp;
+              <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} style={{width: 400, height: 40}} /> &nbsp;
+
+              {/* <input type="submit" /> */}
+              <br />
+              {/*this.state.newRoomName*/}
+            {/*</form>*/}
+
           </Modal.Body>
-
           <Modal.Footer>
             <Button onClick={this.handleHide}>Cancel</Button>
+            {/* <Button bsStyle="primary" bsSize="medium" onClick={this.handleHide}>Submit*</Button> */}
+
             <Button bsStyle="primary" bsSize="medium" onClick={(e) => this.submitHandler(e)}>Submit</Button>
           </Modal.Footer>
-
         </Modal>
 
       </div>
@@ -88,10 +95,24 @@ class RoomList extends Component {
         bsStyle="primary"
         bsSize="medium"
         onClick={() => this.setState({ show: true })}>
+        {/*onClick={() => this.toggleShow() }> */}
         New room
       </Button>
 
         {roomList}
+
+        <br />
+
+
+{/*
+        <form onSubmit={(e) => this.submitHandler(e)}>
+          <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} /> &nbsp;
+          <input type="submit" />
+          <br />
+          {this.state.newRoomName}ddd
+        </form>
+
+*/}
 
       </div>
 

@@ -27,7 +27,7 @@
   to { transform: rotate(360deg); }
 }
 
-/*        */
+/* adding flex for the column */
 
 .container {
   padding-top: 10px;
@@ -40,21 +40,29 @@
 }
 
 .left-column {
-  background-color: lightblue;
-  width: 300px;
+  background-color: #d0d5e0;
+  padding-left: 30px;
+  /*width: 300px;*/
   flex: 1;
   /*flex-basis: 50px;*/
 }
 
 .right-column {
-  background-color: lightgray;
-  flex: 2;
+  background-color: #e6e9ef;
+  padding: 30px;
+  flex: 3;
   /*flex-basis: 500px;*/
 }
 
+/* move button right of column  */
 .move-right {
   float: right;
   clear: right;
   margin-top: -40px;
-  margin-right: 10px;
+  margin-right: 15px;
+}
+
+.room-list {
+  padding: 2px;
+  font-size: 1.3em;
 }
