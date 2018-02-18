@@ -6,17 +6,21 @@ class RoomList extends Component {
 
   constructor(props) {
     super(props);
+    this.roomsRef = this.props.firebase.database().ref('rooms');
+    console.log('this.roomsRef from RoomList >>> ', this.roomsRef)
     this.state = {
-      rooms: [],
+      rooms: ['rooomy', 'moooory', 'beeery'],
       newRoomName: ''
+
     }
   }
 
   componentDidMount() {
-    this.roomsRef = this.props.firebase.database().ref('rooms');
+    // this.roomsRef = this.props.firebase.database().ref('rooms');
     this.roomsRef.on('child_added', snapshot => {
       const room = snapshot.val();
       room.key = snapshot.key;
+      console.log('from RoomList >>>> ', room);
       this.setState({ rooms: this.state.rooms.concat( room ), newRoomName: '', show: false }) // concat adds to the rooms; adding from firebase db
     });
   }
@@ -24,7 +28,7 @@ class RoomList extends Component {
   changeHandler(e) {
   //  changeHandler = (e) => {
   //  console.log('changeHandler !!!');
-    this.setState({ newRoomName: e.target.value });
+    this.setState({ newRoomName: e.target.value});
   //  console.log('newRoomName >>> ', this.state.newRoomName)
   }
 
@@ -45,11 +49,16 @@ class RoomList extends Component {
     console.log('show >>>', this.state.show)
   }
 
+  selectedRoom = (room) => {
+    console.log('selectedRoom key is ', room)
+    this.props.activeRoom(room)
+  }
 
 
   render() {
+
     const roomList = this.state.rooms.map((room) =>
-      <div class="room-list" key={room.key}>{room.name}</div>)
+      <div class="room-list" key={room.key} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> )
 
     return (
 
