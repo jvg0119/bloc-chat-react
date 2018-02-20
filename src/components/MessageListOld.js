@@ -1,3 +1,6 @@
+
+// 2/20/2018 Monday w/ notes ... 
+
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
@@ -6,6 +9,16 @@ class MessageList extends Component {
   constructor(props) {
     super(props);
     this.messagesRef = this.props.firebase.database().ref('messages');
+
+    // this.sessionsRef = this.props.firebase.database().ref("sessions");
+    // console.log('this.sessionsRef >>> ==================>>>>>>>>>', this.sessionsRef)
+
+    // var sessionsRef = firebase.database().ref("sessions");
+    //   sessionsRef.push({
+    //     startedAt: firebase.database.ServerValue.TIMESTAMP
+    //   });
+
+    // console.log('this.messagesRef >>>', this.messagesRef) // this.roomListMessages;
 
     this.state = {
       username: "<USERNAME HERE>",
@@ -22,10 +35,14 @@ class MessageList extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('componentWillReceiveProps');
     // console.log('this >>> ',this);
+    // console.log('this.state.messages >>> ',this.state.messages)
+    // console.log('this.state.messages.length >>> ',this.state.messages.length)
+    // console.log('this.state.messages[0] >>> ',this.state.messages[0])
 
     //const newRoomListMessages = this.state.messages.filter((message) => {
     // console.log('nextProps >>>> ', nextProps);
     const newMessageList = [];
+    // let roomState;
     this.state.messages.filter((message) => {
       // console.log('message.username  ********** >>> ', message.username);
       // console.log('message.roomId  ********** >>> ', message.roomId);
@@ -38,13 +55,19 @@ class MessageList extends Component {
         // this.setState({roomListMessages: this.state.roomListMessages( message )})
         // this.setState({roomListMessages: this.state.roomListMessages.push( message )})
         newMessageList.push(message);
+        // roomState = message.roomId;
       }
     })
     console.log('newMessageList >>> ', newMessageList)
     this.setState({roomListMessages: [...newMessageList]})
-    //  this.setState({room: roomState})
+//    this.setState({room: roomState})
 
     //console.log(roomListMessages)
+
+    // console.log('roomListMessages *>> ', this.state.roomListMessages)
+    // console.log('this.sessionsRef >>> ==================>>>>>>>>>', this.sessionsRef)
+    // console.log('this.sessionsRef >>> ==================>>>>>>>>>', this.sessionsRef.ServerValue.TIMESTAMP)
+
   }
 
   componentDidMount() {
@@ -53,6 +76,7 @@ class MessageList extends Component {
     this.messagesRef.on('child_added', snapshot => {
       const message = snapshot.val();
       message.key = snapshot.key;
+      //message.sentAt = snapshot.ServerValue.TIMESTAMP
 
       // firebase.database.ServerValue.TIMESTAMP
       // console.log('from MessageList >>>> ', message);
@@ -75,6 +99,8 @@ class MessageList extends Component {
     });
   }
 
+
+
   render () {
 
     const messageList = this.state.roomListMessages.map((message) => {
@@ -92,6 +118,17 @@ class MessageList extends Component {
       )
 
     })
+
+    // not using this; delete later
+    // const activeRm = this.state.roomListMessages.map((message) => {
+    //   return(
+    //
+    //     <ListGroupItem href="#" active>
+    //       <h4>Room  {message.roomId}</h4>
+    //     </ListGroupItem>
+    //   )
+    // })
+
 
     return (
       <div>

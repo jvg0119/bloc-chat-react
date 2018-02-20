@@ -35,7 +35,6 @@ class App extends Component {
     console.log('activeRoom after setting >>> ', this.state.activeRoom)
   }
 
-
   render() {
 
     return (
@@ -44,11 +43,11 @@ class App extends Component {
 
         <div className="left-column">
           <h2>Bloc Chat</h2>
-          <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+            <RoomList firebase={firebase} activeRoom={this.activeRoom} />
         </div>
 
         <div className="right-column">
-          <MessageList firebase={firebase} activeRoom={this.state.activeRoom}/>
+          <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
         </div>
 
       </div>

@@ -7,7 +7,7 @@ class RoomList extends Component {
   constructor(props) {
     super(props);
     this.roomsRef = this.props.firebase.database().ref('rooms');
-    console.log('this.roomsRef from RoomList >>> ', this.roomsRef)
+    // console.log('this.roomsRef from RoomList >>> ', this.roomsRef)
     this.state = {
       rooms: ['rooomy', 'moooory', 'beeery'],
       newRoomName: ''
@@ -35,7 +35,6 @@ class RoomList extends Component {
   submitHandler(e) {
     // console.log('submitHandler !!!');
     e.preventDefault();
-
     this.state.newRoomName ?
       this.roomsRef.push({
         name: this.state.newRoomName
@@ -46,11 +45,11 @@ class RoomList extends Component {
   /* hide modal */
   handleHide = () => {
     this.setState({ show: false , newRoomName: ''}); {/* removes newRoomName after hiding */}
-    console.log('show >>>', this.state.show)
+    // console.log('show >>>', this.state.show)
   }
 
   selectedRoom = (room) => {
-    console.log('selectedRoom key is ', room)
+    // console.log('selectedRoom key is ', room)
     this.props.activeRoom(room)
   }
 
@@ -64,43 +63,41 @@ class RoomList extends Component {
 
       <div>
 
-      <div className="modal-container" style={{ height: 10 }}>
+        <div className="modal-container" style={{ height: 10 }}>
+          <Modal
+            show={this.state.show}
+            onHide={this.handleHide}
+            container={this}
+            aria-labelledby="contained-modal-title">
 
-        <Modal
-          show={this.state.show}
-          onHide={this.handleHide}
-          container={this}
-          aria-labelledby="contained-modal-title">
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title">
+                Create new room
+              </Modal.Title>
+            </Modal.Header>
 
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title">
-              Create new room
-            </Modal.Title>
-          </Modal.Header>
+            <Modal.Body>
+              Enter a new room name &nbsp;
+              <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} style={{width: 400, height: 40}} /> &nbsp;
+            </Modal.Body>
 
-          <Modal.Body>
-            Enter a new room name &nbsp;
-            <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} style={{width: 400, height: 40}} /> &nbsp;
-          </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={this.handleHide}>Cancel</Button>
+              <Button bsStyle="primary" bsSize="medium" onClick={(e) => this.submitHandler(e)}>Submit</Button>
+            </Modal.Footer>
 
-          <Modal.Footer>
-            <Button onClick={this.handleHide}>Cancel</Button>
-            <Button bsStyle="primary" bsSize="medium" onClick={(e) => this.submitHandler(e)}>Submit</Button>
-          </Modal.Footer>
+          </Modal>
+        </div>
 
-        </Modal>
+        <Button
+          className="move-right"
+          bsStyle="primary"
+          bsSize="medium"
+          onClick={() => this.setState({ show: true })}>
+          New room
+        </Button>
 
-      </div>
-
-      <Button
-        className="move-right"
-        bsStyle="primary"
-        bsSize="medium"
-        onClick={() => this.setState({ show: true })}>
-        New room
-      </Button>
-
-        {roomList}
+        <h4>{roomList}</h4>
 
       </div>
 
