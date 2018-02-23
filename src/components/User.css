@@ -1,0 +1,10 @@
+.my-modal-container {
+  position: absolute;
+  margin-left: 30%;
+  margin-top: 10%;
+  border: 10px ridge lightgray;
+  border-radius: 4%;
+  padding: 50px;
+  text-align: center;
+  background: white;
+}
