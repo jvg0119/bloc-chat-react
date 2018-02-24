@@ -1,0 +1,15 @@
+.message-form {
+  /*border: 5px solid red;*/
+  position: absolute;
+  bottom: 5%;
+  /*display: flex;
+  min-width: 100vh;*/
+  height: 50px;
+  width: 65%;
+
+}
+
+.message-input {
+  height: 90%;
+  width: 80%;
+}

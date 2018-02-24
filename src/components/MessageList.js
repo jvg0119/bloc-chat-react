@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import './MessageList.css';
 
 class MessageList extends Component {
 
@@ -75,6 +76,28 @@ class MessageList extends Component {
     });
   }
 
+  submitHandler = (e) => {
+    console.log('submitHandler !!!');
+    e.preventDefault();
+//    this.state.content
+//    ? this.
+  }
+
+
+  // this.state.newRoomName ?
+  //   this.roomsRef.push({
+  //     name: this.state.newRoomName
+  //   }) :
+  //   alert('*Please enter a new room name');
+  // }
+
+
+
+  changeHandler = (e) => {
+    console.log('changeHandler !!!');
+    this.setState({ content: e.target.value});
+  }
+
   render () {
 
     const messageList = this.state.roomListMessages.map((message) => {
@@ -105,6 +128,18 @@ class MessageList extends Component {
           {messageList}
 
         </ListGroup>
+
+
+
+        <form className="message-form" onSubmit={ (e) => this.submitHandler(e) }>
+          {/* <input type="text" value={this.state.newTodoDescription} onChange={this.handlechange}/> */}
+          <input className="message-input" type="text" value={this.state.content} onChange={(e) => this.changeHandler(e)}/>&nbsp;
+          {/* <input type="text" value={this.state.newTodoDescription} /> */}
+          <input type="submit" />
+          {/* <div> new item to be added: { this.state.newTodoDescription }</div> */}
+        </form>
+
+
 
       </div>
     )
