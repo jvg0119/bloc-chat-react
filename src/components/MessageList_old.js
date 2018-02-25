@@ -1,5 +1,5 @@
 
-// 2/20/2018 Monday w/ notes ... 
+// 2/20/2018 Monday w/ notes ...
 
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';

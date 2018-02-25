@@ -3,10 +3,10 @@ import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
-import User from './components/User';
 
+//import { Button } from 'react-bootstrap';
+//import { Modal } from 'react-bootstrap';
 
-import { Modal } from 'react-bootstrap';
 
   // Initialize Firebase
   const config = {
@@ -25,8 +25,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activeRoom: '',
-      user: null
+      activeRoom: ''
     }
   }
 
@@ -36,37 +35,25 @@ class App extends Component {
     console.log('activeRoom after setting >>> ', this.state.activeRoom)
   }
 
-  setUser = (user) => {
-    this.setState({ user: user });
-  }
-
   render() {
 
     return (
 
-      <div>
+      <div className="container">
 
-        <div className="container">
+        <div className="left-column">
+          <h2>Bloc Chat</h2>
+            <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+        </div>
 
-          <div className="left-column">
-            <h2>Bloc Chat</h2>
-              <RoomList firebase={firebase} activeRoom={this.activeRoom} />
-
-              <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
-
-          </div>
-
-          <div className="right-column">
-            <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
-          </div>
-
+        <div className="right-column">
+          <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
         </div>
 
       </div>
 
     );
-
-  } // eo render
-} // eo App Component
+  }
+}
 
 export default App;

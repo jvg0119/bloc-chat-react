@@ -33,14 +33,18 @@ class MessageList extends Component {
       // console.log('message.key ********** >>> ' , message.key);
       // console.log('this.props.activeRoom ))))>>> ', this.props.activeRoom);
       // if (message.roomId == this.props.activeRoom) {
-      if (message.roomId == nextProps.activeRoom) {
+      if (message.roomId.toString() === nextProps.activeRoom) {
         // console.log('inside filter >>>', message)
         // this.setState({roomListMessages: this.state.roomListMessages( message )})
         // this.setState({roomListMessages: this.state.roomListMessages.push( message )})
         newMessageList.push(message);
+        // console.log('compare ++++++++>>>', message.roomId, nextProps.activeRoom )
+        // console.log('nextProps.activeRoom ++++++++>>>', typeof(nextProps.activeRoom) ) // string
+        // console.log('message.roomId ++++++++>>>', typeof(message.roomId) ) // number
       }
+      return newMessageList;
     })
-    console.log('newMessageList >>> ', newMessageList)
+    // console.log('newMessageList >>> ', newMessageList)
     this.setState({roomListMessages: [...newMessageList]})
     //  this.setState({room: roomState})
 
@@ -60,7 +64,7 @@ class MessageList extends Component {
 
       this.setState({ messages: this.state.messages.concat( message ) })
 
-      // console.log('this.state.messages.concate(message) >>> $%',  this.state.messages.concat( message ) )
+      // console.log('this.state.messages.concat(message) >>> $%',  this.state.messages.concat( message ) )
 
       // console.log('this.state.messages from componentDidMount >>>> ', this.state.messages);
       // console.log('message from componentDidMount >>>> ', message);
@@ -77,27 +81,23 @@ class MessageList extends Component {
 
   render () {
 
-    const messageList = this.state.roomListMessages.map((message) => {
-      return (
-        <ListGroupItem href="#" >
-          <div>
-            <strong>{message.username}</strong>
+  const messageList = this.state.roomListMessages.map((message) => {
+    return (
+      <ListGroupItem href="#" key={message.key} >
+         <div>
+           <strong>{message.username}</strong>
             <h4>{message.content}</h4>
             <small className={"move-right"}>{message.sentAt}</small>
-            {/* <small>room id: {message.roomId}</small><br/> */}
-            {/* <small>activeRoom: {this.props.activeRoom}</small><br/> */}
-            {/* <small>message.key: {message.key}</small> */}
           </div>
         </ListGroupItem>
       )
-
     })
 
     return (
       <div>
 
         <ListGroupItem href="#" active>
-          <h4>Room  {this.props.activeRoom}</h4>
+          <h4>Room {this.props.activeRoom}</h4>
         </ListGroupItem>
 
         <ListGroup>

@@ -44,21 +44,27 @@ class RoomList extends Component {
 
   /* hide modal */
   handleHide = () => {
-    this.setState({ show: false , newRoomName: ''}); {/* removes newRoomName after hiding */}
+    this.setState({ show: false , newRoomName: ''});
     // console.log('show >>>', this.state.show)
   }
 
   selectedRoom = (room) => {
-    // console.log('selectedRoom key is ', room)
+    //console.log('selectedRoom key is ', room)
     this.props.activeRoom(room)
   }
 
 
   render() {
 
-    const roomList = this.state.rooms.map((room) =>
-      <div class="room-list" key={room.key} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> )
+    const roomList = this.state.rooms.map((room, index) =>
+      <div className="room-list" key={index} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> )
 
+    // const roomList = ['abc', 'apple','zero'].map((room, index) => {
+    //   return(
+    //     room
+    //   )
+
+  //  })
     return (
 
       <div>
@@ -83,7 +89,7 @@ class RoomList extends Component {
 
             <Modal.Footer>
               <Button onClick={this.handleHide}>Cancel</Button>
-              <Button bsStyle="primary" bsSize="medium" onClick={(e) => this.submitHandler(e)}>Submit</Button>
+              <Button bsStyle="primary" bsSize="small" onClick={(e) => this.submitHandler(e)}>Submit</Button>
             </Modal.Footer>
 
           </Modal>
@@ -92,7 +98,7 @@ class RoomList extends Component {
         <Button
           className="move-right"
           bsStyle="primary"
-          bsSize="medium"
+          bsSize="small"
           onClick={() => this.setState({ show: true })}>
           New room
         </Button>
