@@ -32,11 +32,12 @@ class User extends Component {
       <div>
 
         { this.props.user
-          ? <Button bsStyle="primary" bsSize="medium" onClick={this.signOut}>Sign Out</Button>
-          : <Button bsStyle="primary" bsSize="medium" onClick={this.signIn} >Sign In</Button>
+          ? <Button bsStyle="primary" bsSize="small" onClick={this.signOut}>Sign Out</Button>
+          : <Button bsStyle="primary" bsSize="small" onClick={this.signIn} >Sign In</Button>
         }
 
-        { this.props.user ? ' ' + this.props.user.displayName : ' ' + 'Guest' }
+        {/* this.props.user ? ' ' + this.props.user.displayName.split(' ')[0]: ' Guest' */}
+        { this.props.user ? ' ' + this.props.user.displayName: ' Guest' }
 
       </div>
 

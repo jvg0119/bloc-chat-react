@@ -3,10 +3,7 @@ import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
-
-//import { Button } from 'react-bootstrap';
-//import { Modal } from 'react-bootstrap';
-
+import User from './components/User';
 
   // Initialize Firebase
   const config = {
@@ -25,7 +22,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activeRoom: ''
+      activeRoom: '',
+      user: null
     }
   }
 
@@ -33,6 +31,11 @@ class App extends Component {
     console.log('from activeRoom function room arg is >>> ' + room)
     this.setState({activeRoom: room})
     console.log('activeRoom after setting >>> ', this.state.activeRoom)
+  }
+
+  setUser = (user) => {
+    //console.log('setUser method');
+    this.setState({user: user});
   }
 
   render() {
@@ -44,6 +47,7 @@ class App extends Component {
         <div className="left-column">
           <h2>Bloc Chat</h2>
             <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+            <User firebase={firebase} setUser={this.setUser} user={this.state.user} />
         </div>
 
         <div className="right-column">

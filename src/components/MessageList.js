@@ -13,8 +13,7 @@ class MessageList extends Component {
       content: '', // new message
       sentAt: "<TIME MESSAGE WAS SENT HERE>",
       roomId: "<ROOM UID HERE>",
-      roomListMessages: [],
-      // room: ''
+      roomListMessages: []
     }
 
   } // end of constructor
