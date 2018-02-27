@@ -36,12 +36,8 @@ class User extends Component {
           : <Button bsStyle="primary" bsSize="small" onClick={this.signIn} >Sign In</Button>
         }
 
-<<<<<<< HEAD
-        {/* this.props.user ? ' ' + this.props.user.displayName.split(' ')[0]: ' Guest' */}
-        { this.props.user ? ' ' + this.props.user.displayName: ' Guest' }
-=======
+
         { this.props.user ? ' ' + this.props.user.displayName : ' Guest' }
->>>>>>> 5-send-messages
 
       </div>
 

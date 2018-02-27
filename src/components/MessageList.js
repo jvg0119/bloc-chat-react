@@ -29,14 +29,10 @@ class MessageList extends Component {
       // console.log('message.key ********** >>> ' , message.key);
       // console.log('this.props.activeRoom ))))>>> ', this.props.activeRoom);
       // if (message.roomId == this.props.activeRoom) {
-<<<<<<< HEAD
-      if (message.roomId.toString() === nextProps.activeRoom) {
-=======
       // console.log('message.roomId >', message.roomId.toString())
       // console.log('nextProps.activeRoom >', nextProps.activeRoom)
       // console.log('new check ______>>>> ', message)
       if (message.roomId.toString() === nextProps.activeRoom.toString()) {
->>>>>>> 5-send-messages
         // console.log('inside filter >>>', message)
         // this.setState({roomListMessages: this.state.roomListMessages( message )})
         // this.setState({roomListMessages: this.state.roomListMessages.push( message )})
@@ -47,11 +43,8 @@ class MessageList extends Component {
       }
       return newMessageList;
     })
-<<<<<<< HEAD
-    // console.log('newMessageList >>> ', newMessageList)
-=======
+
     console.log('newMessageList >>>', newMessageList)
->>>>>>> 5-send-messages
     this.setState({roomListMessages: [...newMessageList]})
   }
 
@@ -62,19 +55,10 @@ class MessageList extends Component {
       const message = snapshot.val();
       message.key = snapshot.key;
 
-<<<<<<< HEAD
-      // firebase.database.ServerValue.TIMESTAMP
-      // console.log('from MessageList >>>> ', message);
-      // this.setState({ messages: this.state.messages.concat( message ), content: '', show: false }) // concat adds to the rooms; adding from firebase d
 
-      this.setState({ messages: this.state.messages.concat( message ) })
-
-      // console.log('this.state.messages.concat(message) >>> $%',  this.state.messages.concat( message ) )
-=======
       this.setState({ messages: this.state.messages.concat( message ), content: ' ' }) // content:''  removes after sent
     });
   }
->>>>>>> 5-send-messages
 
   submitHandler = (e) => {
     console.log('submitHandler !!!');
@@ -117,15 +101,6 @@ class MessageList extends Component {
 
   render () {
 
-<<<<<<< HEAD
-  const messageList = this.state.roomListMessages.map((message) => {
-    return (
-      <ListGroupItem href="#" key={message.key} >
-         <div>
-           <strong>{message.username}</strong>
-            <h4>{message.content}</h4>
-            <small className={"move-right"}>{message.sentAt}</small>
-=======
     const messageList = this.state.roomListMessages.map((message) => {
       return (
 
@@ -135,7 +110,6 @@ class MessageList extends Component {
             <h4>{message.content}</h4>
             {/* <small className={"move-right"}>{message.sentAt}</small> */}
             <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
->>>>>>> 5-send-messages
           </div>
         </ListGroupItem>
       )
