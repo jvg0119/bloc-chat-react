@@ -5,11 +5,8 @@ import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User';
 
-<<<<<<< HEAD
-=======
 //import { Modal } from 'react-bootstrap';
 
->>>>>>> 5-send-messages
   // Initialize Firebase
   const config = {
     apiKey: "AIzaSyCxwTxIFjbi4xm9gcnvEPA4yijul98UEo0",
@@ -47,30 +44,29 @@ class App extends Component {
 
     return (
 
-      <div className="container">
+      <div>
 
-<<<<<<< HEAD
-        <div className="left-column">
-          <h2>Bloc Chat</h2>
-            <RoomList firebase={firebase} activeRoom={this.activeRoom} />
-            <User firebase={firebase} setUser={this.setUser} user={this.state.user} />
-        </div>
-=======
+        <div className="container">
+
+          <div className="left-column">
+            <h2>Bloc Chat</h2>
+              <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+
+              <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
+
           </div>
 
           <div className="right-column">
             <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}/>
           </div>
->>>>>>> 5-send-messages
 
-        <div className="right-column">
-          <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
         </div>
 
       </div>
 
-    );
-  }
-}
+    )
+
+  } // eo render
+} // eo App Component
 
 export default App;
