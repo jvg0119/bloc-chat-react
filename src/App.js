@@ -5,8 +5,7 @@ import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User';
 
-
-import { Modal } from 'react-bootstrap';
+//import { Modal } from 'react-bootstrap';
 
   // Initialize Firebase
   const config = {
@@ -57,7 +56,7 @@ class App extends Component {
           </div>
 
           <div className="right-column">
-            <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
+            <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}/>
           </div>
 
         </div>

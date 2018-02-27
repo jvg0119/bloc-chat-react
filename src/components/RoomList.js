@@ -9,7 +9,7 @@ class RoomList extends Component {
     this.roomsRef = this.props.firebase.database().ref('rooms');
     // console.log('this.roomsRef from RoomList >>> ', this.roomsRef)
     this.state = {
-      rooms: ['rooomy', 'moooory', 'beeery'],
+      rooms: [],
       newRoomName: ''
 
     }
@@ -39,25 +39,30 @@ class RoomList extends Component {
       this.roomsRef.push({
         name: this.state.newRoomName
       }) :
-      alert('*Please enter a new room name');
+      alert('* Please enter a new room name');
   }
 
   /* hide modal */
   handleHide = () => {
-    this.setState({ show: false , newRoomName: ''}); {/* removes newRoomName after hiding */}
+    this.setState({ show: false , newRoomName: ''});
     // console.log('show >>>', this.state.show)
   }
 
-  selectedRoom = (room) => {
-    // console.log('selectedRoom key is ', room)
+  selectedRoom = (e, room) => {
+    //console.log('selectedRoom key is ', room)
+    e.preventDefault();
     this.props.activeRoom(room)
   }
 
-
   render() {
 
-    const roomList = this.state.rooms.map((room) =>
-      <div class="room-list" key={room.key} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> )
+    const roomList = this.state.rooms.map((room, index) =>
+      /* <div className="room-list" href="#" key={index} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> */
+      <div className="room-list" href="#" key={index} onClick={(e) => this.selectedRoom(e, room.key)}>
+        <a href="*">{room.name}</a>
+      </div>
+
+    )
 
     return (
 
@@ -83,7 +88,7 @@ class RoomList extends Component {
 
             <Modal.Footer>
               <Button onClick={this.handleHide}>Cancel</Button>
-              <Button bsStyle="primary" bsSize="medium" onClick={(e) => this.submitHandler(e)}>Submit</Button>
+              <Button bsStyle="primary" bsSize="small" onClick={(e) => this.submitHandler(e)}>Submit</Button>
             </Modal.Footer>
 
           </Modal>
@@ -92,7 +97,7 @@ class RoomList extends Component {
         <Button
           className="move-right"
           bsStyle="primary"
-          bsSize="medium"
+          bsSize="small"
           onClick={() => this.setState({ show: true })}>
           New room
         </Button>
