@@ -15,9 +15,9 @@ class MessageList extends Component {
       content: '', // new message
       sentAt: "<TIME MESSAGE WAS SENT HERE>",
       roomId: "<ROOM UID HERE>",
-      roomListMessages: []
+      roomListMessages: [],
+      roomName: ''
     }
-
   } // end of constructor
 
   componentWillReceiveProps(nextProps) {
@@ -90,7 +90,6 @@ class MessageList extends Component {
       alert('* Please select a room to send the message first!')
       //console.log('* Please select a room to send the message first!')
     }
-
   }
 
   changeHandler = (e) => {
@@ -118,22 +117,28 @@ class MessageList extends Component {
     return (
       <div>
 
-        <ListGroupItem href="#" active>
-          <h4>Room {this.props.activeRoom}</h4>
+        <ListGroupItem active>
+          <h4>{this.props.currentRoomName ? ' ' + this.props.currentRoomName : ' No Room Selected' }</h4>
         </ListGroupItem>
 
         <ListGroup>
           {messageList}
         </ListGroup>
 
+        {/* <form className="message-form" onSubmit={ (e) => this.submitHandler(e) }> */}
+
+        { this.props.user &&
         <form className="message-form" onSubmit={ (e) => this.submitHandler(e) }>
 
-            <input className="message-input" type="text" value={this.state.content} onChange={(e) => this.changeHandler(e)}/>&nbsp;
-            <input type="submit" value="Send"/>
+          <input className="message-input" type="text" /*value={this.state.content}*/
+          onChange={(e) => this.changeHandler(e)}
+          placeholder={'Enter your message'}
+          />&nbsp;
+          <input type="submit" value="Send"
+          />
 
         </form>
-
-
+        }
 
       </div>
     )

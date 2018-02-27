@@ -49,17 +49,19 @@ class RoomList extends Component {
   }
 
 
-  selectedRoom = (e, room) => {
+  selectedRoom = (e, room, roomName) => {
     //console.log('selectedRoom key is ', room)
     e.preventDefault();
-    this.props.activeRoom(room)
+    this.props.activeRoom(room);
+    this.props.setCurrentRoomName(roomName);
+    //console.log('selectedRoom &*_+>>>', this.props.currentRoomName)
   }
 
   render() {
 
     const roomList = this.state.rooms.map((room, index) =>
       /* <div className="room-list" href="#" key={index} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> */
-      <div className="room-list" href="#" key={index} onClick={(e) => this.selectedRoom(e, room.key)}>
+      <div className="room-list" href="#" key={index} onClick={(e) => this.selectedRoom(e, room.key, room.name)}>
         <a href="*">{room.name}</a>
       </div>
 

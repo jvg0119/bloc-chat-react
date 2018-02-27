@@ -25,7 +25,8 @@ class App extends Component {
 
     this.state = {
       activeRoom: '',
-      user: null
+      user: null,
+      currentRoomName: ''
     }
   }
 
@@ -40,6 +41,11 @@ class App extends Component {
     this.setState({user: user});
   }
 
+//  setCurrentRoomName(room) {
+  setCurrentRoomName = (room) => {
+    this.setState({currentRoomName: room})
+  }
+
   render() {
 
     return (
@@ -50,14 +56,17 @@ class App extends Component {
 
           <div className="left-column">
             <h2>Bloc Chat</h2>
-              <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+              <RoomList firebase={firebase} activeRoom={this.activeRoom}
+              currentRoomName={this.state.currentRoomName} setCurrentRoomName={this.setCurrentRoomName}
+              />
 
               <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
 
           </div>
 
           <div className="right-column">
-            <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}/>
+            <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}
+            currentRoomName={this.state.currentRoomName}/>
           </div>
 
         </div>
