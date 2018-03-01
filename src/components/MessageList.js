@@ -51,41 +51,77 @@ class MessageList extends Component {
       const message = snapshot.val();
       message.key = snapshot.key;
 
-      this.setState({ messages: this.state.messages.concat( message ), content: ' ' }) // content:''  removes after sent
+      // this.setState({ messages: this.state.messages.concat( message ), content: ' ' }) // content:''  removes after sent
+      this.setState({ messages: this.state.messages.concat( message ) })
     });
   }
+
+// original - this works
+// but does not remove them content and needs refreshing to update messages
+  // submitHandler = (e) => {
+  //   console.log('submitHandler !!!');
+  //   e.preventDefault();
+  //
+  //   if (this.props.activeRoom) {
+  //     console.log('You are now in room ======== ' ,this.props.activeRoom )
+  //     if (this.props.user) {
+  //       if (this.state.content !== ' ') {
+  //         console.log('after this.state.content ******* >>>> ', this.state.content)
+  //         this.messagesRef.push({
+  //           content: this.state.content,
+  //           roomId: this.props.activeRoom,
+  //           username: this.props.user.displayName,
+  //           sentAt: this.props.firebase.database.ServerValue.TIMESTAMP});
+  //
+  //       } else {
+  //         alert('* Please enter a message')
+  //         // this.messagesRef.push({content: this.state.content, roomId: this.props.activeRoom, username: 'Guest'});
+  //         // console.log('this is the content >>>> ', this.messagesRef)
+  //       }
+  //
+  //     } else {
+  //       alert('* You need to be signed in to send a message!')
+  //       //console.log('* Please enter a message!!!')
+  //       //console.log('this is the content >>>> ****', this.messagesRef.content)
+  //     }
+  //   } else {
+  //     alert('* Please select a room to send the message first!')
+  //     //console.log('* Please select a room to send the message first!')
+  //   }
+  // }
+
+  validMessageContent(str) {
+    const msgContent = str
+    console.log('message is ', str)
+    if (str.trim().length > 0) {
+      console.log("something is here", str.trim().length)
+      return true
+    } else {
+      console.log('nothing is here')
+      return false
+    }
+  }
+
 
   submitHandler = (e) => {
     console.log('submitHandler !!!');
     e.preventDefault();
+    if (this.validMessageContent(this.state.content)) {
 
-    if (this.props.activeRoom) {
-      console.log('You are now in room ======== ' ,this.props.activeRoom )
-      if (this.props.user) {
-        if (this.state.content !== ' ') {
-          console.log('after this.state.content ******* >>>> ', this.state.content)
-          this.messagesRef.push({
-            content: this.state.content,
-            roomId: this.props.activeRoom,
-            username: this.props.user.displayName,
-            sentAt: this.props.firebase.database.ServerValue.TIMESTAMP});
+      //removing this for testing purpose
+      this.messagesRef.push({
+        content: this.state.content,
+        roomId: this.props.activeRoom,
+        username: this.props.user.displayName,
+        sentAt: this.props.firebase.database.ServerValue.TIMESTAMP});
+      console.log('writing to firebase')
 
-        } else {
-          alert('* Please enter a message')
-          // this.messagesRef.push({content: this.state.content, roomId: this.props.activeRoom, username: 'Guest'});
-          // console.log('this is the content >>>> ', this.messagesRef)
-        }
-
-      } else {
-        alert('* You need to be signed in to send a message!')
-        //console.log('* Please enter a message!!!')
-        //console.log('this is the content >>>> ****', this.messagesRef.content)
-      }
-    } else {
-      alert('* Please select a room to send the message first!')
-      //console.log('* Please select a room to send the message first!')
     }
+    this.setState({ content: "", roomId: "",  username: "", sentAt: ""});
+    // this.setState({ content: "", roomId: "",  username: "", sentAt: ""});
+    console.log('after writing to firebase >>>', this.state.content)
   }
+
 
   changeHandler = (e) => {
     console.log('changeHandler !!!');
@@ -135,6 +171,8 @@ class MessageList extends Component {
 
         </form>
         }
+
+
 
       </div>
     )
