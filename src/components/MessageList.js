@@ -47,12 +47,22 @@ class MessageList extends Component {
   componentDidMount() {
     // this.messagesRef = this.props.firebase.database().ref('messages');
     console.log('componentDidMount >>> ', this.messagesRef)
+    const myMessages = this.state.messages
     this.messagesRef.on('child_added', snapshot => {
       const message = snapshot.val();
       message.key = snapshot.key;
+      console.log('messages >>>>>>>> ', message)
 
+      myMessages.push(message)
+
+      console.log(this.state.messages)
+      console.log(myMessages)
+      console.log(this.state.messages === myMessages)
+
+      this.setState({messages: myMessages})
+      console.log('this.state.messages  >>>>', this.state.messages)
       // this.setState({ messages: this.state.messages.concat( message ), content: ' ' }) // content:''  removes after sent
-      this.setState({ messages: this.state.messages.concat( message ) })
+      //this.setState({ messages: this.state.messages.concat( message ) })
     });
   }
 
