@@ -22,44 +22,20 @@ class MessageList extends Component {
   } // end of constructor
 
   componentDidMount() {
-    const myMessages = this.state.messages
     this.messagesRef.on('child_added', snapshot => {
       const message = snapshot.val();
       message.key = snapshot.key
-        myMessages.push(message)
-      // this.setState({ messages: this.state.messages.concat( message ), content: '' })
-      // this.refreshing(this.props.activeRoom);
-      // console.log('this.props.activeRoom >>>>**', this.props.activeRoom)
-      // console.log('message.roomId >>>>>>** ', message.roomId)
+      this.setState({ messages: this.state.messages.concat( message ), content: '' })
     })
   }
-
-  // this worked but did not automatically show the sent message
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('componentWillReceiveProps ran !!! ')
-  //   const newMessageList = [];
-  // //  const newMessageList = this.state.roomListMessages
-  //   this.state.messages.filter((message) => {
-  //     console.log('message from componentWillReceiveProps >>>>>', message)
-  //     console.log('message.roomId >>>', message.roomId)
-  //     console.log('nextProps.activeRoom >>>', nextProps.activeRoom)
-  //   //
-  //     if (message.roomId.toString() === nextProps.activeRoom.toString()) {
-  //       newMessageList.push(message);
-  //     }
-  //     //return newMessageList;
-  //     this.setState({roomListMessages: newMessageList})
-  //   })
-  // }
-
 
   validMessageContent(str) {
     console.log('message is ', str)
     if (str.trim().length > 0) {
-      console.log("something is here", str.trim().length)
+      //console.log("something is here", str.trim().length)
       return true
     } else {
-      console.log('nothing is here')
+      //console.log('nothing is here')
       return false
     }
   }
@@ -77,8 +53,7 @@ class MessageList extends Component {
       //console.log('writing to firebase')
     }
     this.setState({ content: '', roomId: '',  username: '', sentAt: ''});
-
-    console.log('after writing to firebase >>>', this.state.content)
+    //console.log('after writing to firebase >>>', this.state.content)
   }
 
   changeHandler = (e) => {
@@ -87,31 +62,6 @@ class MessageList extends Component {
   }
 
   render () {
-
-    // const messageList = this.state.roomListMessages.map((message) => {
-    //   return (
-    //
-    //     <ListGroupItem key={message.key} >
-    //       <div>
-    //         <strong>{message.username}</strong>
-    //         <h4>{message.content}</h4>
-    //         {/* <small className={"move-right"}>{message.sentAt}</small> */}
-    //         <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
-    //       </div>
-    //     </ListGroupItem>
-    //   )
-    //
-    // })
-
-    // const messageList = this.state.messages.map((message) => {
-    //   return(
-    //     <ListGroupItem key={message.key} >
-    //       <strong>{message.username}</strong>
-    //       <h4>{message.content}</h4>
-    //       <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
-    //     </ListGroupItem>
-    //   )
-    // })
 
     const messageList = this.state.messages.map((message) => {
        //console.log('this.props.activeRoom >>>>**', this.props.activeRoom)
@@ -141,8 +91,6 @@ class MessageList extends Component {
           {messageList}
         </ListGroup>
 
-        {/* <form className="message-form" onSubmit={ (e) => this.submitHandler(e) }> */}
-
         { this.props.user &&
         <form className="message-form" onSubmit={ (e) => this.submitHandler(e) }>
 
@@ -156,11 +104,6 @@ class MessageList extends Component {
         </form>
 
         }
-
-        {console.log('here >>>', this.state.messages)}
-        {console.log('inside render roomListMessages >>> ', this.state.roomListMessages)}
-        {console.log('inside render roomListMessages >>> ', this.state.roomListMessages )}
-        {console.log('this.props.activeRoom >>>++', this.props.activeRoom)}
 
       </div>
     )
