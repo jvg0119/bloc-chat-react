@@ -25,32 +25,27 @@ class MessageList extends Component {
     const myMessages = this.state.messages
     this.messagesRef.on('child_added', snapshot => {
       const message = snapshot.val();
-      message.key = snapshot.key
-        myMessages.push(message)
-      // this.setState({ messages: this.state.messages.concat( message ), content: '' })
-      // this.refreshing(this.props.activeRoom);
-      // console.log('this.props.activeRoom >>>>**', this.props.activeRoom)
-      // console.log('message.roomId >>>>>>** ', message.roomId)
+      message.key = snapshot.key;
+      this.setState({
+        messages: this.state.messages.concat( message ),
+        content: ''
+      }, () => {
+        this.updateDisplayedMessages(this.props.activeRoom)
+      });
     })
   }
 
 //  this worked but did not automatically show the sent message
-  // componentWillReceiveProps(nextProps) {
-  // //  console.log('componentWillReceiveProps ran !!! ')
-  //   const newMessageList = [];
-  // //  const newMessageList = this.state.roomListMessages
-  //   this.state.messages.filter((message) => {
-  //     // console.log('message from componentWillReceiveProps >>>>>', message)
-  //     // console.log('message.roomId >>>', message.roomId)
-  //     // console.log('nextProps.activeRoom >>>', nextProps.activeRoom)
-  //   //
-  //     if (message.roomId.toString() === nextProps.activeRoom.toString()) {
-  //       newMessageList.push(message);
-  //     }
-  //     //return newMessageList;
-  //     this.setState({roomListMessages: newMessageList})
-  //   })
-  // }
+  componentWillReceiveProps(nextProps) {
+    this.updateDisplayedMessages(nextProps.activeRoom);
+  }
+
+  updateDisplayedMessages(activeRoom) {
+    const newMessageList = this.state.messages.filter((message) => {
+      return message.roomId.toString() === activeRoom.toString();
+    });
+    this.setState({roomListMessages: newMessageList});
+  }
 
 
   validMessageContent(str) {
@@ -88,20 +83,20 @@ class MessageList extends Component {
 
   render () {
 
-    // const messageList = this.state.roomListMessages.map((message) => {
-    //   return (
-    //
-    //     <ListGroupItem key={message.key} >
-    //       <div>
-    //         <strong>{message.username}</strong>
-    //         <h4>{message.content}</h4>
-    //         {/* <small className={"move-right"}>{message.sentAt}</small> */}
-    //         <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
-    //       </div>
-    //     </ListGroupItem>
-    //   )
-    //
-    // })
+    const messageList = this.state.roomListMessages.map((message) => {
+      if (this.props.activeRoom === message.roomId) {
+        return (
+          <ListGroupItem key={message.key} >
+            <div>
+              <strong>{message.username}</strong>
+              <h4>{message.content}</h4>
+              <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
+            </div>
+          </ListGroupItem>
+        )
+      }
+
+    })
 
     // const messageList = this.state.messages.map((message) => {
     //   return(
@@ -113,21 +108,19 @@ class MessageList extends Component {
     //   )
     // })
 
-    const messageList = this.state.messages.map((message) => {
-       //console.log('this.props.activeRoom >>>>**', this.props.activeRoom)
-       //console.log('message.roomId >>>>>>** ', message.roomId)
-       if (this.props.activeRoom === message.roomId) {
-        return (
-          <ListGroupItem key={message.key} >
-            <div>
-              <strong>{message.username}</strong>
-              <h4>{message.content}</h4>
-              <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
-            </div>
-          </ListGroupItem>
-        )
-      }
-    })
+    // const messageList = this.state.messages.map((message) => {
+    //    if (this.props.activeRoom === message.roomId) {
+    //     return (
+    //       <ListGroupItem key={message.key} >
+    //         <div>
+    //           <strong>{message.username}</strong>
+    //           <h4>{message.content}</h4>
+    //           <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
+    //         </div>
+    //       </ListGroupItem>
+    //     )
+    //   }
+    // })
 
     return (
 
@@ -156,12 +149,6 @@ class MessageList extends Component {
         </form>
 
         }
-
-        {console.log('here >>>', this.state.messages)}
-        {console.log('inside render roomListMessages >>> ', this.state.roomListMessages)}
-        {console.log('inside render roomListMessages >>> ', this.state.roomListMessages )}
-        {console.log('this.props.activeRoom >>>++', this.props.activeRoom)}
-
       </div>
     )
 
