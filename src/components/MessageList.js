@@ -84,7 +84,7 @@ class MessageList extends Component {
   render () {
 
     const messageList = this.state.roomListMessages.map((message) => {
-      if (this.props.activeRoom === message.roomId) {
+      //if (this.props.activeRoom === message.roomId) {
         return (
           <ListGroupItem key={message.key} >
             <div>
@@ -94,7 +94,7 @@ class MessageList extends Component {
             </div>
           </ListGroupItem>
         )
-      }
+      //}
 
     })
 
