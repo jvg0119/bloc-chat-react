@@ -98,29 +98,6 @@ class MessageList extends Component {
 
     })
 
-    // const messageList = this.state.messages.map((message) => {
-    //   return(
-    //     <ListGroupItem key={message.key} >
-    //       <strong>{message.username}</strong>
-    //       <h4>{message.content}</h4>
-    //       <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
-    //     </ListGroupItem>
-    //   )
-    // })
-
-    // const messageList = this.state.messages.map((message) => {
-    //    if (this.props.activeRoom === message.roomId) {
-    //     return (
-    //       <ListGroupItem key={message.key} >
-    //         <div>
-    //           <strong>{message.username}</strong>
-    //           <h4>{message.content}</h4>
-    //           <small className={"move-right"}>{new Date(message.sentAt).toString()}</small>
-    //         </div>
-    //       </ListGroupItem>
-    //     )
-    //   }
-    // })
 
     return (
 
