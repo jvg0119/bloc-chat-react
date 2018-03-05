@@ -34,15 +34,15 @@ class MessageList extends Component {
     })
   }
 
-  // this worked but did not automatically show the sent message
+//  this worked but did not automatically show the sent message
   // componentWillReceiveProps(nextProps) {
-  //   console.log('componentWillReceiveProps ran !!! ')
+  // //  console.log('componentWillReceiveProps ran !!! ')
   //   const newMessageList = [];
   // //  const newMessageList = this.state.roomListMessages
   //   this.state.messages.filter((message) => {
-  //     console.log('message from componentWillReceiveProps >>>>>', message)
-  //     console.log('message.roomId >>>', message.roomId)
-  //     console.log('nextProps.activeRoom >>>', nextProps.activeRoom)
+  //     // console.log('message from componentWillReceiveProps >>>>>', message)
+  //     // console.log('message.roomId >>>', message.roomId)
+  //     // console.log('nextProps.activeRoom >>>', nextProps.activeRoom)
   //   //
   //     if (message.roomId.toString() === nextProps.activeRoom.toString()) {
   //       newMessageList.push(message);
