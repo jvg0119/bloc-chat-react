@@ -36,7 +36,6 @@ class User extends Component {
           : <Button bsStyle="primary" bsSize="small" onClick={this.signIn} >Sign In</Button>
         }
 
-
         { this.props.user ? ' ' + this.props.user.displayName : ' Guest' }
 
       </div>

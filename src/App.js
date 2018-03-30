@@ -5,7 +5,6 @@ import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User';
 
-//import { Modal } from 'react-bootstrap';
 
   // Initialize Firebase
   const config = {
@@ -22,28 +21,26 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+//    this.setActiveRoom = this.setActiveRoom.bind(this)
 
     this.state = {
       activeRoom: '',
       user: null,
-      currentRoomName: ''
+      userEmail: null,
+      currentRoomName: 'No room selected',
+      messageStatus: ''
     }
   }
 
-  activeRoom = (room) => {
-    console.log('from activeRoom function room arg is >>> ' + room)
+  setActiveRoom = (room) => {
+    //console.log('from activeRoom function room arg is >>> ' + room)
     this.setState({activeRoom: room})
-    console.log('activeRoom after setting >>> ', this.state.activeRoom)
+    console.log('room in setActiveRoom >>> ', room)
+    console.log('activeRoom after setting >>> '+ this.state.activeRoom)
   }
 
   setUser = (user) => {
-    //console.log('setUser method');
     this.setState({user: user});
-  }
-
-//  setCurrentRoomName(room) {
-  setCurrentRoomName = (room) => {
-    this.setState({currentRoomName: room})
   }
 
   render() {
@@ -55,18 +52,28 @@ class App extends Component {
         <div className="container">
 
           <div className="left-column">
-            <h2>Bloc Chat</h2>
-              <RoomList firebase={firebase} activeRoom={this.activeRoom}
-              currentRoomName={this.state.currentRoomName} setCurrentRoomName={this.setCurrentRoomName}
-              />
 
-              <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
+            <h2>Bloc Chat</h2>
+
+            <RoomList firebase={firebase}
+              setActiveRoom={this.setActiveRoom}
+              activeRoom={this.state.activeRoom}
+              currentRoomName={this.state.currentRoomName}
+              user={this.state.user}
+            />
+
+            <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
 
           </div>
 
           <div className="right-column">
-            <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}
-            currentRoomName={this.state.currentRoomName}/>
+
+            <MessageList firebase={firebase}
+              activeRoom={this.state.activeRoom}
+              user={this.state.user}
+              messageStatus={this.state.messageStatus}
+            />
+
           </div>
 
         </div>

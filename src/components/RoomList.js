@@ -1,82 +1,125 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class RoomList extends Component {
 
   constructor(props) {
     super(props);
+
     this.roomsRef = this.props.firebase.database().ref('rooms');
-    // console.log('this.roomsRef from RoomList >>> ', this.roomsRef)
+    this.messagesRef = this.props.firebase.database().ref('messages');
+
     this.state = {
       rooms: [],
-      newRoomName: ''
-
+      newRoomName: '',
+      show: false
     }
   }
 
-  componentDidMount() {
-    // this.roomsRef = this.props.firebase.database().ref('rooms');
-    this.roomsRef.on('child_added', snapshot => {
-      const room = snapshot.val();
-      room.key = snapshot.key;
-      console.log('from RoomList >>>> ', room);
-      this.setState({ rooms: this.state.rooms.concat( room ), newRoomName: '', show: false }) // concat adds to the rooms; adding from firebase db
-    });
-  }
-
   changeHandler(e) {
-  //  changeHandler = (e) => {
-  //  console.log('changeHandler !!!');
     this.setState({ newRoomName: e.target.value});
-  //  console.log('newRoomName >>> ', this.state.newRoomName)
   }
 
-  submitHandler(e) {
-    // console.log('submitHandler !!!');
+  submitHandler(e) { // create or add room to firebase database
     e.preventDefault();
-    this.state.newRoomName ?
-      this.roomsRef.push({
-        name: this.state.newRoomName
-      }) :
-      alert('* Please enter a new room name');
+    if(this.state.newRoomName) {
+      const newRoom = this.roomsRef.push({
+        name: this.state.newRoomName.trim()
+      });
+
+    // console.log('the new room is >>>', { name: this.state.newRoomName.trim(), key: newRoom.key })
+    // re-created the new object to pass to setActiveRoom
+    const tempNewRoom = { name: this.state.newRoomName.trim(), key: newRoom.key }
+    // console.log('tempNewRoom >>> ', tempNewRoom);
+    this.props.setActiveRoom(tempNewRoom);
+
+    // this.state.rooms does not have the current or newly created room
+    // console.log('this.state.rooms[] >>> ', this.state.rooms)
+    // console.log('this.state.rooms[] >>> ', this.state.rooms[this.state.rooms.length-1] )
+    }
   }
 
   /* hide modal */
   handleHide = () => {
-    this.setState({ show: false , newRoomName: ''});
-    // console.log('show >>>', this.state.show)
+    this.setState({ show: false , newRoomName: '', showRename: false});
   }
 
-
-  selectedRoom = (e, room, roomName) => {
-    //console.log('selectedRoom key is ', room)
+  onSelectRoom = (e,room) => {
     e.preventDefault();
-    this.props.activeRoom(room);
-    this.props.setCurrentRoomName(roomName);
-    //console.log('selectedRoom &*_+>>>', this.props.currentRoomName)
+    this.props.setActiveRoom(room);
   }
+
+  removeRoom = (room) => {
+    this.roomsRef.child(room.key).remove();
+    this.props.setActiveRoom('');
+  }
+
+
+//////////////////////////////////////
+
+  componentDidMount() {
+    this.roomsRef.on('child_added', snapshot => {
+      const room = snapshot.val();
+      room.key = snapshot.key;
+
+    //   this.setState({ rooms: this.state.rooms.concat( room ), newRoomName: '', show: false});
+    //   console.log('inside RoomList componentDidMount his.state.rooms >>>', this.state.rooms)
+    // });
+
+    this.setState((prevState) => ({
+      rooms: prevState.rooms.concat(room), newRoomName: '', show: false
+    }))
+  })
+
+    this.roomsRef.on('child_removed', snapshot => {
+      this.setState((prevState, prevProps) => ({
+        rooms: prevState.rooms.filter((room) => {
+          return (
+            room.key !== snapshot.key
+          )
+        })
+       }))
+
+    })
+  }  // componentDidMount() {
+
+  componentDidUpdate(prevProps, prevState) {
+    // console.log('componentDidUpdate !!!');
+  }
+
+/////////////////////////////////////////////
 
   render() {
 
-    const roomList = this.state.rooms.map((room, index) =>
-      /* <div className="room-list" href="#" key={index} onClick={() => this.selectedRoom(room.key)}>{room.name}</div> */
-      <div className="room-list" href="#" key={index} onClick={(e) => this.selectedRoom(e, room.key, room.name)}>
-        <a href="*">{room.name}</a>
-      </div>
+    const removeRoomStyle = {
+      fontSize: ".8em",
+      color: "white",
+      background: "darkRed",
+      border: "2px solid black",
+      borderRadius: "20px",
+      float: "right",
+      clear: "both"
+    }
 
-    )
+    const roomList = this.state.rooms.map((room, index) => {
+      return (
 
-    // const roomList = ['abc', 'apple','zero'].map((room, index) => {
-    //   return(
-    //     room
-    //   )
+        <div className="room-list" href="#" key={room.key}>
+          <a href="*" onClick={(e) => this.onSelectRoom(e, room)}>{room.name}</a>
 
-  //  })
+          { (this.props.user) && (this.props.user.displayName)  &&
+          <button style={removeRoomStyle} onClick={() => this.removeRoom(room)}>delete</button>
+          }
+
+        </div>
+      )
+    })
+
     return (
 
       <div>
-
+        {/* Bootstrap Modal for "New room"  */}
         <div className="modal-container" style={{ height: 10 }}>
           <Modal
             show={this.state.show}
@@ -91,25 +134,29 @@ class RoomList extends Component {
             </Modal.Header>
 
             <Modal.Body>
-              Enter a new room name &nbsp;
-              <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} style={{width: 400, height: 40}} /> &nbsp;
+              {/*Enter a new room name &nbsp;*/}
+              <input type="text" onChange={(e) => this.changeHandler(e)} value={this.state.newRoomName} style={{width: 500, height: 40}}
+              placeholder={"Enter a new room name"}/> &nbsp;
             </Modal.Body>
 
             <Modal.Footer>
               <Button onClick={this.handleHide}>Cancel</Button>
               <Button bsStyle="primary" bsSize="small" onClick={(e) => this.submitHandler(e)}>Submit</Button>
             </Modal.Footer>
-
           </Modal>
         </div>
+        {/* Bootstrap Modal for "New room"  */}
 
-        <Button
-          className="move-right"
-          bsStyle="primary"
-          bsSize="small"
-          onClick={() => this.setState({ show: true })}>
-          New room
-        </Button>
+        {
+          this.props.user &&
+          <Button
+            className="move-right"
+            bsStyle="primary"
+            bsSize="small"
+            onClick={() => this.setState({ show: true })}>
+            New room
+          </Button>
+        }
 
         <h4>{roomList}</h4>
 
