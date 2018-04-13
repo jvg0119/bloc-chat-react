@@ -1,0 +1,82 @@
+
+
+{ this.props.activeEditMessage.key !== message.key &&
+  <button onClick={() => this.props.setActiveEditMessage(message)}>edit message!!!</button> }
+  {console.log('this.props.activeEditMessage.key >>>> ',  this.props.activeEditMessage.key)}
+
+{ (this.props.activeEditMessage.key === message.key) &&
+(<div>
+  <input
+  type="text"
+  value={this.state.editMessageContent}
+  onChange={(e) => this.editMessageChangeHandler(e,message)} />
+  <button onClick={() => this.updateMessageHandler()}>update message</button>
+</div>
+)}
+
+
+
+
+
+
+
+(
+  <div>
+    message.content !== this.state.selectedEditMessage;
+    {console.log('message >>>', message)};
+    {console.log('message.content >>>', message.content)};
+    {console.log('message.content >>>', this.state.selectedEditMessage)};
+  </div>
+)
+
+
+
+
+<input
+  type="text"
+  value={this.state.editMessageContent}
+  onChange={(e) => this.messageChangeHandler(e)}
+/>
+<button onClick={() => this.updateMessageHandler(message)}>update message</button>
+</div>
+
+
+
+
+
+<div>
+  <input
+    type="text"
+    value={this.state.selectedEditMessage}
+    //onChange={(e) => this.messageChangeHandler(e)}
+    onChange={(e) => this.setState({selectedEditMessage: e.target.value})}
+  />
+  <button onClick={() => this.updateMessageHandler()}>update message</button>
+</div>
+
+
+{/* onChange={(e) => this.setState({selectedEditMessage: e.tartget.value})} */}
+
+//////////////
+what is the difference between these 2
+the bottom does not work
+newMessages.splice(index,1,changed_message) // splicing or replacing the updated message
+this.setState({messages: newMessages}
+  ,() => {
+    this.updateDisplayedMessages(this.props.activeRoom)
+  });
+
+
+this.setState({ messages: newMessages.splice(index,1,changed_message) }
+,() => {
+  this.updateDisplayedMessages(this.props.activeRoom)
+});
+/////////////
+
+
+
+
+
+<h3>{this.props.activeRoom.name}</h3>
+
+{this.props.activeRoom.name && }

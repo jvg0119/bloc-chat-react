@@ -33,10 +33,6 @@ class RoomList extends Component {
     const tempNewRoom = { name: this.state.newRoomName.trim(), key: newRoom.key }
     // console.log('tempNewRoom >>> ', tempNewRoom);
     this.props.setActiveRoom(tempNewRoom);
-
-    // this.state.rooms does not have the current or newly created room
-    // console.log('this.state.rooms[] >>> ', this.state.rooms)
-    // console.log('this.state.rooms[] >>> ', this.state.rooms[this.state.rooms.length-1] )
     }
   }
 
@@ -55,21 +51,18 @@ class RoomList extends Component {
     this.props.setActiveRoom('');
   }
 
-
 //////////////////////////////////////
 
   componentDidMount() {
+    console.log('componentDidMount ***')
     this.roomsRef.on('child_added', snapshot => {
       const room = snapshot.val();
       room.key = snapshot.key;
 
-    //   this.setState({ rooms: this.state.rooms.concat( room ), newRoomName: '', show: false});
-    //   console.log('inside RoomList componentDidMount his.state.rooms >>>', this.state.rooms)
-    // });
-
     this.setState((prevState) => ({
       rooms: prevState.rooms.concat(room), newRoomName: '', show: false
     }))
+    console.log('componentDidMount ***!!!')
   })
 
     this.roomsRef.on('child_removed', snapshot => {
@@ -85,7 +78,7 @@ class RoomList extends Component {
   }  // componentDidMount() {
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log('componentDidUpdate !!!');
+    //console.log('componentDidUpdate !!!');
   }
 
 /////////////////////////////////////////////

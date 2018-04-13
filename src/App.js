@@ -28,7 +28,8 @@ class App extends Component {
       user: null,
       userEmail: null,
       currentRoomName: 'No room selected',
-      messageStatus: ''
+      messageStatus: '',
+      activeEditMessage: ''
     }
   }
 
@@ -41,6 +42,13 @@ class App extends Component {
 
   setUser = (user) => {
     this.setState({user: user});
+  }
+
+  setActiveEditMessage = (message) => {
+    this.setState((prevState) => ({
+      activeEditMessage: message
+    }))
+  // this.setState({activeEditMessage: message})
   }
 
   render() {
@@ -72,6 +80,8 @@ class App extends Component {
               activeRoom={this.state.activeRoom}
               user={this.state.user}
               messageStatus={this.state.messageStatus}
+              activeEditMessage={this.state.activeEditMessage}
+              setActiveEditMessage={this.setActiveEditMessage}
             />
 
           </div>
